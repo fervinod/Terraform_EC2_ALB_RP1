@@ -5,7 +5,8 @@
 *.tfstate
 *.tfstate.*
 
-# Crash log files
+# Crash log filespwd
+
 crash.log
 crash.*.log
 
