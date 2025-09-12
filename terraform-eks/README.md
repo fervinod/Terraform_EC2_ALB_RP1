@@ -1,6 +1,6 @@
 # terraform-eks
 A sample repository to create EKS on AWS using Terraform.
-
+#to test direct merge
 ### Install AWS CLI 
 
 As the first step, you need to install AWS CLI as we will use the AWS CLI (`aws configure`) command to connect Terraform with AWS in the next steps.
