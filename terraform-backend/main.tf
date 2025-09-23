@@ -26,12 +26,6 @@ resource "aws_instance" "ec2inst1" {
   subnet_id = aws_subnet.vmfsub1.id
 }
 
-resource "aws_instance" "ec2inst2" {
-  ami = "ami-020cba7c55df1f615"
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.vmfsub1.id
-}
-
 
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = "vinod-s3-tfstate-demo" 
