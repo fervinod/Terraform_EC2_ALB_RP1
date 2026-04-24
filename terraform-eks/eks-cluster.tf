@@ -34,9 +34,11 @@ module "eks" {
       min_size     = 2
       max_size     = 3
       desired_size = 2
-
-      ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = ["t3.medium"]
+
+#In v21 + modern Kubernetes, the module already picks the correct AMI.
+      #ami_type       = "AL2023_x86_64_STANDARD"
+  
     }
   }
 }
