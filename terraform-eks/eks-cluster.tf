@@ -15,7 +15,7 @@ module "eks" {
   #AmazonEKSClusterAdminPolicy
   access_entries = {
     admin = {
-      principal_arn = "arn:aws:iam::295220279949:user/eks-admin"
+      principal_arn = "arn:aws:iam::295220279949:root"
 
       policy_associations = {
         admin = {
