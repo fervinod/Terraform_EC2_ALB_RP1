@@ -36,7 +36,7 @@ module "eks" {
       desired_size = 2
       instance_types = ["t3.medium"]
       ami_type       = "AL2023_x86_64_STANDARD"
-      vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
+      #vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
 
 #In v21 + modern Kubernetes, the module already picks the correct AMI.
       #ami_type       = "AL2023_x86_64_STANDARD"
