@@ -7,7 +7,7 @@ module "eks" {
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
-
+  vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
   enable_irsa = true
 
  # cluster_endpoint_public_access = true
