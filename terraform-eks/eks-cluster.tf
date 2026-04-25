@@ -39,7 +39,7 @@ module "eks" {
 #  aws_security_group.all_worker_mgmt.id
 #]
 
-attach_cluster_primary_security_group = true
+#attach_cluster_primary_security_group = true
     }
   }
 
