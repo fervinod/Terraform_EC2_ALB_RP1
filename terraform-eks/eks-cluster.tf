@@ -35,9 +35,9 @@ module "eks" {
       desired_size   = 2
       instance_types = ["t3.medium"]
       ami_type       = "AL2023_x86_64_STANDARD"
-      vpc_security_group_ids = [
-  aws_security_group.all_worker_mgmt.id
-]
+    #  vpc_security_group_ids = [
+#  aws_security_group.all_worker_mgmt.id
+#]
 
 attach_cluster_primary_security_group = true
     }
