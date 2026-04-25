@@ -7,15 +7,12 @@ module "eks" {
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
-  vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
+
   enable_irsa = true
 
- # cluster_endpoint_public_access = true
-
-  #AmazonEKSClusterAdminPolicy
   access_entries = {
     admin = {
-      principal_arn = "arn:aws:iam::295220279949:root"
+      principal_arn = "arn:aws:iam::295220279949:user/eks-admin"
 
       policy_associations = {
         admin = {
@@ -28,6 +25,25 @@ module "eks" {
     }
   }
 
+  # ✅ correct way to open traffic
+  node_security_group_additional_rules = {
+    ingress_all = {
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "ingress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    egress_all = {
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
   eks_managed_node_groups = {
     node_group = {
       min_size       = 2
@@ -35,11 +51,6 @@ module "eks" {
       desired_size   = 2
       instance_types = ["t3.medium"]
       ami_type       = "AL2023_x86_64_STANDARD"
-    #  vpc_security_group_ids = [
-#  aws_security_group.all_worker_mgmt.id
-#]
-
-#attach_cluster_primary_security_group = true
     }
   }
 
