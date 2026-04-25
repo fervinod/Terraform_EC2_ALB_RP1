@@ -1,46 +1,44 @@
 module "eks" {
-  source          = "terraform-aws-modules/eks/aws"
-  version         =   "21.18.0"  #"20.8.4"  # used updated version 
-  name    = local.cluster_name
-  #version = var.kubernetes_version
-  kubernetes_version  = var.kubernetes_version
+  source  = "terraform-aws-modules/eks/aws"
+  version = "21.18.0"
 
-  subnet_ids      = module.vpc.private_subnets
+  name               = local.cluster_name
+  kubernetes_version = var.kubernetes_version
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 
   enable_irsa = true
 
-  tags = {
-    cluster = "demo"
+  cluster_endpoint_public_access = true
+
+  #AmazonEKSClusterAdminPolicy
+  access_entries = {
+    admin = {
+      principal_arn = "arn:aws:iam::295220279949:user/eks-admin"
+
+      policy_associations = {
+        admin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            type = "cluster"
+          }
+        }
+      }
+    }
   }
 
-  vpc_id = module.vpc.vpc_id
-
- # eks_managed_node_group = {
- #   ami_type               = "AL2_x86_64"
- #   instance_types         = ["t3.medium"]
-  #  vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
-  #}
-
-  #eks_managed_node_groups = {
-
-    #node_group = {
-     # min_size     = 2
-      #max_size     = 3
-      #desired_size = 2
-    #}
-  #}
   eks_managed_node_groups = {
     node_group = {
-      min_size     = 2
-      max_size     = 3
-      desired_size = 2
+      min_size       = 2
+      max_size       = 3
+      desired_size   = 2
       instance_types = ["t3.medium"]
       ami_type       = "AL2023_x86_64_STANDARD"
-      #vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
-
-#In v21 + modern Kubernetes, the module already picks the correct AMI.
-      #ami_type       = "AL2023_x86_64_STANDARD"
-  
     }
+  }
+
+  tags = {
+    cluster = "demo"
   }
 }
